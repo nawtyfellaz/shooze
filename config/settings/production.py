@@ -1,3 +1,5 @@
+import logging
+
 from .base import *  # noqa
 from .base import env
 
@@ -35,14 +37,18 @@ CACHES = {
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 # https://docs.djangoproject.com/en/dev/ref/settings/#secure-ssl-redirect
 SECURE_SSL_REDIRECT = env.bool("DJANGO_SECURE_SSL_REDIRECT", default=True)
+SECURE_SSL_HOST = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#session-cookie-secure
 SESSION_COOKIE_SECURE = True
+CORS_REPLACE_HTTPS_REFERER = True
+HOST_SCHEME = "https://"
+CSRF_COOKIE_SAMESITE = 'Strict'
 # https://docs.djangoproject.com/en/dev/ref/settings/#csrf-cookie-secure
 CSRF_COOKIE_SECURE = True
 # https://docs.djangoproject.com/en/dev/topics/security/#ssl-https
 # https://docs.djangoproject.com/en/dev/ref/settings/#secure-hsts-seconds
 # TODO: set this to 60 seconds first and then to 518400 once you prove the former works
-SECURE_HSTS_SECONDS = 60
+SECURE_HSTS_SECONDS = 60 #2592000
 # https://docs.djangoproject.com/en/dev/ref/settings/#secure-hsts-include-subdomains
 SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool(
     "DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS", default=True
@@ -53,6 +59,7 @@ SECURE_HSTS_PRELOAD = env.bool("DJANGO_SECURE_HSTS_PRELOAD", default=True)
 SECURE_CONTENT_TYPE_NOSNIFF = env.bool(
     "DJANGO_SECURE_CONTENT_TYPE_NOSNIFF", default=True
 )
+SECURE_FRAME_DENY = False
 
 # STORAGES
 # ------------------------------------------------------------------------------
@@ -72,8 +79,17 @@ _AWS_EXPIRY = 60 * 60 * 24 * 7
 AWS_S3_OBJECT_PARAMETERS = {
     "CacheControl": f"max-age={_AWS_EXPIRY}, s-maxage={_AWS_EXPIRY}, must-revalidate"
 }
+AWS_HEADERS = {
+    'Access-Control-Allow-Origin': '*'
+    # # 'Expires': expires,
+    # 'Cache-Control': 'max-age=86400',
+}
 #  https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
 AWS_DEFAULT_ACL = None
+AWS_DOWNLOAD_EXPIRE = 5000
+AWS_FILE_EXPIRE = 200
+AWS_PRELOAD_METADATA = True
+
 # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
 AWS_S3_REGION_NAME = env("DJANGO_AWS_S3_REGION_NAME", default=None)
 # STATIC
@@ -85,6 +101,10 @@ STATIC_URL = f"https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/static/"
 # ------------------------------------------------------------------------------
 DEFAULT_FILE_STORAGE = "shooze.utils.storages.MediaRootS3Boto3Storage"
 MEDIA_URL = f"https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/media/"
+# PRIVATE FILES
+# ------------------------------------------------------------------------------
+PRIVATE_FILE_STORAGE = "shooze.utils.storages.ProtectedS3Boto3Storage"
+PRIVATE_URL = f"https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/private/"
 
 # TEMPLATES
 # ------------------------------------------------------------------------------

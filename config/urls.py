@@ -6,6 +6,28 @@ from django.urls import include, path
 from django.views import defaults as default_views
 from django.views.generic import TemplateView
 from rest_framework.authtoken.views import obtain_auth_token
+from django.contrib.sitemaps.views import sitemap
+from django.contrib.sitemaps import GenericSitemap
+
+
+sitemaps = {
+    'static': StaticViewSitemap,
+    'product':GenericSitemap({
+        'queryset': Product.objects.all(),
+        'date_field': 'updated',
+        'issued_date': 'issued',
+    }, priority=0.9),
+    # 'posts':GenericSitemap({
+    #     'queryset': Post.objects.all_posts(),
+    #     'date_field': 'updated',
+    #     'pub_date': 'pub_date',
+    # }, priority=0.9),
+    # 'career':GenericSitemap({
+    #     'queryset': Career.objects.all(),
+    #     'date_field': 'updated',
+    # }, priority=0.9),
+}
+
 
 urlpatterns = [
     path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
