@@ -69,6 +69,7 @@ celerybeat-schedule
 .venv
 venv/
 ENV/
+.envs/
 
 # Rope project settings
 .ropeproject
@@ -285,6 +286,9 @@ shooze/media/
 .pytest_cache/
 
 
-.env
-.envs/*
-!.envs/.local/
+.env
+
+.envs/*
+
+!.envs/.local/
+
