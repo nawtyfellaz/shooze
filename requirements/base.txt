@@ -17,5 +17,36 @@ django-allauth==0.41.0  # https://github.com/pennersr/django-allauth
 django-crispy-forms==1.9.0  # https://github.com/django-crispy-forms/django-crispy-forms
 django-compressor==2.4  # https://github.com/django-compressor/django-compressor
 django-redis==4.11.0  # https://github.com/jazzband/django-redis
+
 # Django REST Framework
 djangorestframework==3.11.0  # https://github.com/encode/django-rest-framework
+
+
+django-maintenance-mode==0.14.0
+django-phonenumber-field==4.0.0
+google-api-python-client==1.7.11
+django-admin-honeypot==1.1.0
+django-autocomplete-light==3.5.0
+django-bootstrap4==1.1.1
+django-bootstrap-datepicker-plus==3.0.5
+django-ckeditor==5.8.0
+django-jet==1.0.8
+sweetify==2.0.0
+readtime==1.1.1
+django-cookie-law==2.0.1
+django-authtools==1.7.0 # makes creation of custom model user easy
+django-countries==5.5
+phonenumbers==8.11.1
+FeedParser==5.2.1
+django-view-breadcrumbs==0.1.0
+python-magic==0.4.15
+# python-magic-bin==0.4.14
+django-haystack==2.8.1
+whoosh==2.7.4
+django-htmlmin==0.11.0 
+django-likes==2.0.1
+
+# security
+django-referrer-policy==1.0
+django-csp==3.6
+django-feature-policy==3.2.0
