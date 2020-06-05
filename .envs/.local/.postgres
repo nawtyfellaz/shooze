@@ -1,7 +1,0 @@
-# PostgreSQL
-# ------------------------------------------------------------------------------
-POSTGRES_HOST=postgres
-POSTGRES_PORT=5432
-POSTGRES_DB=shooze
-POSTGRES_USER=gGbzWGEXZSZENxmgRLIjeEXPPMBvfJYw
-POSTGRES_PASSWORD=i2kGWl0MwPH7heLFE3PlBfefJNOi8Chz9h7cbWSCZMNYIIUoFwfjIh8hLgeejkqP
