@@ -102,6 +102,7 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "shooze.users.apps.UsersConfig",
+    "shooze.product.apps.ProductConfig",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

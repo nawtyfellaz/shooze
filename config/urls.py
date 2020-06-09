@@ -6,6 +6,7 @@ from django.urls import include, path
 from django.views import defaults as default_views
 from django.views.generic import TemplateView
 from rest_framework.authtoken.views import obtain_auth_token
+from django.utils.translation import ugettext_lazy as _
 from django.contrib.sitemaps.views import sitemap
 from django.contrib.sitemaps import GenericSitemap
 
@@ -30,6 +31,15 @@ sitemaps = {
 
 
 urlpatterns = [
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
+    # path('likes/', include('likes.urls')),
+
+    # ADMIN SKIN
+    path('jet/dashboard/', include('jet.dashboard.urls', namespace='jet-dashboard')),
+    path('jet/', include('jet.urls', namespace='jet')),
+
+
     path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
     path(
         "about/", TemplateView.as_view(template_name="pages/about.html"), name="about"
@@ -78,3 +88,5 @@ if settings.DEBUG:
         import debug_toolbar
 
         urlpatterns = [path("__debug__/", include(debug_toolbar.urls))] + urlpatterns
+
+admin.site.site_header = 'SHOOZE STORE'
