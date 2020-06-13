@@ -35,6 +35,9 @@ class User(AbstractUser):
     # First Name and Last Name do not cover name patterns
     # around the globe.
     terms           = BooleanField(default=False)
+    buyer           = BooleanField(default=False)
+    seller          = BooleanField(default=False)
+    guest           = BooleanField(default=True)
 
     def get_absolute_url(self):
         return reverse("users:detail", kwargs={"username": self.username})

@@ -9,15 +9,16 @@ from rest_framework.authtoken.views import obtain_auth_token
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.sitemaps.views import sitemap
 from django.contrib.sitemaps import GenericSitemap
+from config.sitemaps import  StaticViewSitemap
 
 
 sitemaps = {
     'static': StaticViewSitemap,
-    'product':GenericSitemap({
-        'queryset': Product.objects.all(),
-        'date_field': 'updated',
-        'issued_date': 'issued',
-    }, priority=0.9),
+    # 'product':GenericSitemap({
+    #     'queryset': Product.objects.all(),
+    #     'date_field': 'updated',
+    #     'issued_date': 'issued',
+    # }, priority=0.9),
     # 'posts':GenericSitemap({
     #     'queryset': Post.objects.all_posts(),
     #     'date_field': 'updated',

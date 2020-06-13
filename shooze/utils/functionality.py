@@ -15,32 +15,19 @@ def random_integer_generator(size=12, chars=string.digits):
 def random_string_generator(size=10, chars=string.ascii_lowercase + string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
 
-def unique_client_identity_number_generator(instance):
+def unique_sku_number_generator(instance):
     """
     This is for a Django project with a identity carfield
     """
-    size = random.randint(4, 5)
-    new_identity_number = random_integer_generator(size=size)
-
-    Klass = instance.__class__
-    qs_exists = Klass.objects.filter(employeeid=new_identity_number).exists()
-    if qs_exists:
-        return unique_slug_generator(instance)
-    return "ETE-" + new_identity_number
-
-def unique_result_identity_number_generator(instance):
-    """
-    This is for a Django project with a identity carfield
-    """
-    size = random.randint(5, 7)
+    size = random.randint(7, 7)
     new_result_number = random_integer_generator(size=size)
 
     Klass = instance.__class__
-    qs_exists = Klass.objects.filter(resultid=new_result_number).exists()
+    qs_exists = Klass.objects.filter(sku=new_result_number).exists()
 
     if qs_exists:
         return unique_slug_generator(instance)
-    return "RES-" + new_result_number
+    return new_result_number
 
 def get_filename(path): #/abc/filename.mp4
     return os.path.basename(path)

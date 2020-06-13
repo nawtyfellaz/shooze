@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /accounts/
+Disallow: /users/
+Disallow: /search/
+Disallow: /jet/
+Disallow: /ckeditor/

@@ -70,10 +70,10 @@ DJANGO_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.sites",
+    "django.contrib.sitemaps",
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.humanize", # Handy template tags
-    "django.contrib.admin",
     "django.forms",
 ]
 THIRD_PARTY_APPS = [
@@ -96,7 +96,7 @@ THIRD_PARTY_APPS = [
     'ckeditor_uploader',
 
     # serach engine
-    'haystack',
+    # 'haystack',
 
 ]
 
@@ -117,7 +117,7 @@ MIGRATION_MODULES = {"sites": "shooze.contrib.sites.migrations"}
 # MIGRATIONS
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#migration-modules
-MIGRATION_MODULES = {"sites": "etopoenergy.contrib.sites.migrations"}
+MIGRATION_MODULES = {"sites": "shooze.contrib.sites.migrations"}
 
 # MAINTENANCE
 # by default, to get/set the state value a local file backend is used
@@ -472,7 +472,7 @@ JET_DEFAULT_THEME = 'green'
 JET_SIDE_MENU_COMPACT = False
 # JET_INDEX_DASHBOARD = 'jet.dashboard.dashboard.DefaultIndexDashboard'
 # JET_APP_INDEX_DASHBOARD = 'jet.dashboard.dashboard.DefaultAppIndexDashboard'
-JET_MODULE_GOOGLE_ANALYTICS_CLIENT_SECRETS_FILE = str(ROOT_DIR("client_secrets.json"))
+JET_MODULE_GOOGLE_ANALYTICS_CLIENT_SECRETS_FILE = str(ROOT_DIR/ "client_secrets.json")
 
 BOOTSTRAP4 = {
     'inlude_jquery': True,
@@ -481,7 +481,7 @@ BOOTSTRAP4 = {
 HAYSTACK_CONNECTIONS = {
     'default':{
         'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
-        'PATH': str(APPS_DIR.path("whppsh_index"))
+        'PATH': str(APPS_DIR / "whppsh_index")
     }
 }
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
