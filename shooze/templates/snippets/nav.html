@@ -1,4 +1,4 @@
-{% load static %}
+{% load static i18n %}
 
 {% comment %} <div class="mb-1">
     <nav class="navbar navbar-expand-md navbar-light bg-light">
@@ -40,7 +40,7 @@
 
 </div> {% endcomment %}
 
-
+{% get_current_language as LANGUAGE_CODE %}
 
 <!-- Top Bar
 ============================================= -->
@@ -54,17 +54,35 @@
                 ============================================= -->
                 <div class="top-links on-click">
                     <ul class="top-links-container">
-                        <li class="top-links-item"><a href="#"  onclick="return false">Lang:</a>
+                        <li class="top-links-item"><a href="#"  onclick="return false"><i class="icon-globe"></i>{{LANGUAGE_CODE}}</a>
                             <ul class="top-links-sub-menu">
-                                <li class="top-links-item"><a href="about.html">EN</a></li>
-                                <li class="top-links-item"><a href="faqs.html">FR</a></li>
-                                <li class="top-links-item"><a href="contact.html">SP</a></li>
-                                <li class="top-links-item"><a href="sitemap.html">CH</a></li>
+                                <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+                                    <input name="next" type="hidden" value="{{ redirect_to }}">
+                                    {% comment %} <select name="language"> {% endcomment %}
+                                        {% get_current_language as LANGUAGE_CODE %}
+                                        {% get_available_languages as LANGUAGES %}
+                                        {% get_language_info_list for LANGUAGES as languages %}
+                                        {% for language in languages %}
+                                            {% comment %} <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}> {% endcomment %}
+                                            <button type="submit" name="language" value="{{ language.code }}" class="{% if language.code == LANGUAGE_CODE %}selected{% endif %} col-6 " style="font-size:9px;">{{language.name_local|upper|truncatechars:7}}
+                                            </button>
+                                                
+                                            {% comment %} </option> {% endcomment %}
+                                        {% endfor %}
+                                    {% comment %} </select>
+                                    <input type="submit" value="Go"> {% endcomment %}
+                                </form>
+
                             </ul>
                         </li>
-                        <li class="top-links-item"><a href="faqs.html">FAQs</a></li>
-                        <li class="top-links-item"><a href="contact.html">Contact</a></li>
-                        <li class="top-links-item"><a href="login-register.html">Login</a>
+                        <li class="top-links-item"><a href=""><i class="icon-question"></i></a></li>
+                        <li class="top-links-item"><a href=""><i class="icon-call"></i> Support</a></li>
+
+                        {% if request.user.is_authenticated %}
+                        <li class="top-links-item"><a href="{% url 'users:detail' request.user.username  %}"><i class="icon-user4"></i> {% trans 'Account' %}</a></li>
+                        {% else %}
+                        <li class="top-links-item"><a href="">{% trans "Register" %}</a></li>
+                        <li class="top-links-item"><a href="{% url 'account_login' %}">{% trans "Login" %}</a>
                             <div class="top-links-section">
                                 <form id="top-login" autocomplete="off">
                                     <div class="form-group">
@@ -83,6 +101,8 @@
                                 </form>
                             </div>
                         </li>
+                        {% endif %}
+
                     </ul>
                 </div><!-- .top-links end -->
 
@@ -95,11 +115,9 @@
                 <ul id="top-social">
                     <li><a href="#" class="si-facebook"><span class="ts-icon"><i class="icon-facebook"></i></span><span class="ts-text">Facebook</span></a></li>
                     <li><a href="#" class="si-twitter"><span class="ts-icon"><i class="icon-twitter"></i></span><span class="ts-text">Twitter</span></a></li>
-                    <li class="d-none d-sm-flex"><a href="#" class="si-dribbble"><span class="ts-icon"><i class="icon-dribbble"></i></span><span class="ts-text">Dribbble</span></a></li>
                     <li><a href="#" class="si-github"><span class="ts-icon"><i class="icon-github-circled"></i></span><span class="ts-text">Github</span></a></li>
-                    <li class="d-none d-sm-flex"><a href="#" class="si-pinterest"><span class="ts-icon"><i class="icon-pinterest"></i></span><span class="ts-text">Pinterest</span></a></li>
                     <li><a href="#" class="si-instagram"><span class="ts-icon"><i class="icon-instagram2"></i></span><span class="ts-text">Instagram</span></a></li>
-                    <li><a href="tel:+1.11.85412542" class="si-call"><span class="ts-icon"><i class="icon-call"></i></span><span class="ts-text">+1.11.85412542</span></a></li>
+                    <li><a href="tel:+1.11.85412542" class="si-call"><span class="ts-icon"><i class="icon-call"></i></span><span class="ts-text">+234.706.4857582</span></a></li>
                     <li><a href="mailto:info@canvas.com" class="si-email3"><span class="ts-icon"><i class="icon-email3"></i></span><span class="ts-text">info@shooze.store</span></a></li>
                 </ul><!-- #top-social end -->
 
@@ -120,8 +138,8 @@
                 <!-- Logo
                 ============================================= -->
                 <div id="logo">
-                    <a href="index.html" class="standard-logo" data-dark-logo="images/logo-dark.png"><img src="images/logo.png" alt="Canvas Logo"></a>
-                    <a href="index.html" class="retina-logo" data-dark-logo="images/logo-dark@2x.png"><img src="images/logo@2x.png" alt="Canvas Logo"></a>
+                    <a href="{% url 'home' %}" class="standard-logo" data-dark-logo="{% static 'images/logo-dark.png' %}"><img src="{% static 'images/logo.png' %}" alt="SHOOZE"></a>
+                    <a href="{% url 'home' %}" class="retina-logo" data-dark-logo="{% static 'images/logo-dark@2x.png' %}"><img src="{% static 'images/logo@2x.png' %}" alt="SHOOZE"></a>
                 </div><!-- #logo end -->
 
                 <div class="header-misc">
@@ -185,8 +203,8 @@
 
                     <ul class="menu-container">
                         <li class="menu-item">
-                            <a class="menu-link" href="index.html"><div>Home</div></a>
-                            <ul class="sub-menu-container">
+                            <a class="menu-link" href="{% url 'home' %}"><div>Home</div></a>
+                            {% comment %} <ul class="sub-menu-container">
                                 <li class="menu-item">
                                     <a class="menu-link" href="intro.html#section-niche"><div>Niche Demos</div></a>
                                 </li>
@@ -340,10 +358,10 @@
                                         </div>
                                     </div>
                                 </li>
-                            </ul>
+                            </ul> {% endcomment %}
                         </li>
                         <li class="menu-item">
-                            <a class="menu-link" href="#"><div>Features</div></a>
+                            <a class="menu-link" href="#"><div>Categories</div></a>
                             <ul class="sub-menu-container">
                                 <li class="menu-item">
                                     <a class="menu-link" href="#"><div><i class="icon-stack"></i>Sliders</div></a>

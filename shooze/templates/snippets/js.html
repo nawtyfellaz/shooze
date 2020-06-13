@@ -3,7 +3,7 @@
 <!-- External JavaScripts
 ============================================= -->
 <script src="{% static 'js/jquery.js' %}"></script>
-<script src="{% static 'js/plugins.js' %}"></script>
+{% comment %} <script src="{% static 'js/plugins.js' %}"></script> {% endcomment %}
 <script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
 <script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
 
@@ -16,5 +16,5 @@
 
 
 <!--   Optional JS   -->
-<script src="{% static 'js/Chart.min.js'%}"></script>
-<script src="{% static 'js/Chart.extension.js'%}"></script>
+<script src="{% static 'js/chart.js'%}"></script>
+<script src="{% static 'js/chart-utils.js'%}"></script>

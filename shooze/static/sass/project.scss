@@ -35,3 +35,56 @@ $red: #b94a48;
   border-color: $dark-pink;
   color: $red;
 }
+
+// Initialize
+@import "sass/variables";
+@import "sass/mixins";
+
+// Bootstrap
+@import "sass/bootstrap/bootstrap";
+
+// Core CSS
+@import "sass/layouts";
+@import "sass/typography";
+@import "sass/utilities";
+
+
+// Content Blocks
+@import "sass/topbar";
+@import "sass/header";
+@import "sass/sliders";
+@import "sass/pagetitle";
+@import "sass/content";
+@import "sass/portfolio";
+@import "sass/blog";
+@import "sass/shop";
+@import "sass/events";
+
+
+// Shortcodes
+@import "sass/shortcodes";
+
+// Forms
+@import "sass/forms";
+
+// Footer
+@import "sass/footer";
+
+
+// Widgets
+@import "sass/widgets";
+
+// Paginations
+@import "sass/paginations";
+
+// Extras
+@import "sass/extras";
+
+// Page Loaders
+@import "sass/page-loaders";
+
+// Dark
+@import "sass/dark";
+
+// RTL Template
+@import "sass/style-rtl";
