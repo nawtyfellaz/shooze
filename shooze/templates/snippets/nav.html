@@ -76,7 +76,7 @@
                             </ul>
                         </li>
                         <li class="top-links-item"><a href=""><i class="icon-question"></i></a></li>
-                        <li class="top-links-item"><a href=""><i class="icon-call"></i> Support</a></li>
+                        <li class="top-links-item"><a href=""><i class="icon-call"></i> {% trans 'Support'%}</a></li>
 
                         {% if request.user.is_authenticated %}
                         <li class="top-links-item"><a href="{% url 'users:detail' request.user.username  %}"><i class="icon-user4"></i> {% trans 'Account' %}</a></li>
@@ -113,12 +113,12 @@
                 <!-- Top Social
                 ============================================= -->
                 <ul id="top-social">
-                    <li><a href="#" class="si-facebook"><span class="ts-icon"><i class="icon-facebook"></i></span><span class="ts-text">Facebook</span></a></li>
-                    <li><a href="#" class="si-twitter"><span class="ts-icon"><i class="icon-twitter"></i></span><span class="ts-text">Twitter</span></a></li>
-                    <li><a href="#" class="si-github"><span class="ts-icon"><i class="icon-github-circled"></i></span><span class="ts-text">Github</span></a></li>
-                    <li><a href="#" class="si-instagram"><span class="ts-icon"><i class="icon-instagram2"></i></span><span class="ts-text">Instagram</span></a></li>
-                    <li><a href="tel:+1.11.85412542" class="si-call"><span class="ts-icon"><i class="icon-call"></i></span><span class="ts-text">+234.706.4857582</span></a></li>
-                    <li><a href="mailto:info@canvas.com" class="si-email3"><span class="ts-icon"><i class="icon-email3"></i></span><span class="ts-text">info@shooze.store</span></a></li>
+                    <li><a href="#" class="si-facebook"><span class="ts-icon"><i class="icon-facebook"></i></span><span class="ts-text">{% trans 'Facebook'%}</span></a></li>
+                    <li><a href="#" class="si-twitter"><span class="ts-icon"><i class="icon-twitter"></i></span><span class="ts-text">{% trans 'Twitter'%}</span></a></li>
+                    <li><a href="#" class="si-github"><span class="ts-icon"><i class="icon-github-circled"></i></span><span class="ts-text">{% trans 'Github'%}</span></a></li>
+                    <li><a href="#" class="si-instagram"><span class="ts-icon"><i class="icon-instagram2"></i></span><span class="ts-text">{% trans 'Instagram'%}</span></a></li>
+                    <li><a href="tel:+1.11.85412542" class="si-call"><span class="ts-icon"><i class="icon-call"></i></span><span class="ts-text">{% trans '+234.706.4857582'%}</span></a></li>
+                    <li><a href="mailto:info@canvas.com" class="si-email3"><span class="ts-icon"><i class="icon-email3"></i></span><span class="ts-text">{% trans 'info@shooze.store'%}</span></a></li>
                 </ul><!-- #top-social end -->
 
             </div>
@@ -156,7 +156,7 @@
                         <a href="#" id="top-cart-trigger"><i class="icon-line-bag"></i><span class="top-cart-number">5</span></a>
                         <div class="top-cart-content">
                             <div class="top-cart-title">
-                                <h4>Shopping Cart</h4>
+                                <h4>{%trans 'Shopping Cart'%}</h4>
                             </div>
                             <div class="top-cart-items">
                                 <div class="top-cart-item">

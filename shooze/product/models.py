@@ -28,6 +28,7 @@ from django.db.models import (
     SET_NULL,
     URLField
 )
+from django.contrib.contenttypes.fields import GenericRelation
 from model_utils.models import TimeStampedModel #created & modified fields
 
 from ckeditor_uploader.fields import RichTextUploadingField
@@ -35,6 +36,7 @@ from shooze.product.validator import file_validator
 
 from shooze.utils.functionality import unique_slug_generator, get_filename
 from shooze.product.managers import ProductManager, StoreManager
+from shooze.contents.models import Category, Review
 
 User = settings.AUTH_USER_MODEL
 
@@ -43,17 +45,40 @@ User = settings.AUTH_USER_MODEL
 def brand_logo(instance, filename):
     return "product/brand/{filename}".format(filename=filename)
 
+def seller_file_path(instance, filename):
+    return "product/sellers/{filename}".format(filename=filename)
+
 def product_file_path(instance, filename):
     return "product/files/{filename}".format(filename=filename)
 
-def seller_file_path(instance, filename):
-    return "product/sellers/{filename}".format(filename=filename)
 
 class Brand(TimeStampedModel):
     title       = CharField(_('Brand_Name'), blank=False, null=True, max_length=300)
     slug        = SlugField(unique=True, null=True, blank=True, max_length=350)
     logo        = ImageField(_('brand_logo'), upload_to=brand_logo, null=True, blank=True)
     active      = BooleanField(default=True)
+
+    def __str__(self):
+        return self.title
+
+    @staticmethod
+    def autocomplete_search_fields():
+        return 'title'
+
+    class Meta:
+        managed = True
+        verbose_name = _('Brand')
+        verbose_name_plural = _('Stores')
+        ordering = ['title', 'active']
+
+    def get_absolute_url(self):
+        return f"/brand/{self.slug}"
+
+    def get_update_url(self):
+        return f"{self.get_absolute_url}/update"
+
+    def get_delete_url(self):
+        return f"{self.get_absolute_url}/delete"
 
 
 class Seller(TimeStampedModel):
@@ -99,6 +124,8 @@ class Product(TimeStampedModel):
     instock     = BooleanField(default=False)
     featured    = BooleanField(default=False)
     digital     = BooleanField(default=False)
+    category    = ManyToManyField(Category, related_query_name='products')
+    review      = GenericRelation(Review, related_query_name='product_reviews')
 
     objects = ProductManager()
 
@@ -125,33 +152,18 @@ class Product(TimeStampedModel):
         return f"{self.get_absolute_url}/delete"
 
 
-class ProductCategory(TimeStampedModel):
-    title       = CharField(_('product_category'), max_length=255, unique=True, null=True, blank=True)
-    post    = ManyToManyField(Product, blank=True)
+
+class Images(TimeStampedModel):
+    product         = ForeignKey(Product, on_delete=CASCADE)
+    title           = CharField(_('Product_image_title'), max_length=150)
+    image           = ImageField(_('upload_images'), upload_to=product_file_path, null=True, blank=True)
 
     def __str__(self):
-        return self.title
+        return self.content_type.title
 
     class Meta:
         managed = True
-        verbose_name = 'Product Category'
-        verbose_name_plural = 'Product Categories'
-        ordering = ['title']
-
-
-class ProductReview(TimeStampedModel):
-    product     = ForeignKey(Product, _('review_product'), related_name='reviewed_product')
-    author      = CharField(_('author'), max_length=300)
-    text = RichTextUploadingField()
-    active      = BooleanField(default=True)
-
-    class Meta:
+        verbose_name = _('Product File')
+        verbose_name_plural =  _('Product Files')
         ordering = ['-created']
 
-    def _str_(self):
-        request = self.request
-        if request.user.ia_authenticated:
-            text = 'Comment by {}'.format(request.user.username)
-        else:
-            text = 'Comment by {}'.format(self.author)
-        return text

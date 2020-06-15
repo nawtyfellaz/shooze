@@ -1,6 +1,5 @@
 from django.contrib import admin
-from shooze.product.models import Product, Seller, ProductCategory, ProductReview, Brand
-
+from shooze.product.models import Product, Seller, Brand, Images
 
 # Register your models here.
 class StoreAdmin(admin.ModelAdmin):
@@ -18,12 +17,16 @@ class StoreAdmin(admin.ModelAdmin):
 
 admin.site.register(Seller, StoreAdmin)
 
+class ProductImagesInline(admin.StackedInline):
+    model = Images
+
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['sname', 'title', 'maf_date', 'digital', 'featured', 'instock']
     list_filter = ['instock', 'featured', 'maf_date', 'digital']
     list_editable = ['featured', 'maf_date', 'digital', 'title']
     ordering = ['maf_date', '-title', 'instock']
     search_fields = ['sname', 'title', 'description', 'maf_date']
+    inlines = [ProductImagesInline]
 
     def sname(self, instance):
         return instance.store.title
@@ -34,6 +37,4 @@ class ProductAdmin(admin.ModelAdmin):
 admin.site.register(Product, ProductAdmin)
 
 
-admin.site.register(ProductCategory)
-admin.site.register(ProductReview)
 admin.site.register(Brand)

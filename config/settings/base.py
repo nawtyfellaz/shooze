@@ -98,10 +98,14 @@ THIRD_PARTY_APPS = [
     # serach engine
     # 'haystack',
 
+    # category using mptt tree hirachy
+    'mptt',
+
 ]
 
 LOCAL_APPS = [
     "shooze.users.apps.UsersConfig",
+    "shooze.contents.apps.ContentsConfig",
     "shooze.product.apps.ProductConfig",
     # Your stuff: custom apps go here
 ]
